@@ -9,18 +9,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define 'internal-blog', autostart: false
   config.vm.define 'external-blog', autostart: false
 
-  config.vm.box = 'ubuntu/trusty64'
+  # config.vm.box = 'ubuntu/trusty64'
+  config.vm.box = 'bento/ubuntu-16.04'
   config.vm.hostname = 'www.local.malmo.se'
 
   config.vm.provider :virtualbox do |v|
     v.memory = 1024
-    v.cpus = 2
+    v.cpus = 1
   end
   config.vm.provider :vmware_fusion
   config.vm.provider :vmware_workstation
 
-  config.vm.network 'forwarded_port', guest: 8000, host: 8000
-  # config.vm.network 'forwarded_port', guest: 443, host: 4430
+  config.vm.network 'forwarded_port', guest: 8000, host: 8001
+  config.vm.network 'forwarded_port', guest: 4430, host: 4430
 
   # Setup Puppet environment and install malmo-mcommons using bash script
   config.vm.provision :shell, path: 'https://raw.githubusercontent.com/malmostad/puppet-mcommons/master/bootstrap.sh'
